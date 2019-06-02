@@ -4,11 +4,11 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-     case 'EFETUAR_LOGIN':
-        return {
-            jojo: action.payload
-        }
-     default:
-      return state
+        case 'EFETUAR_LOGIN':
+            return {
+                jojo: action.payload
+            }
+        default:
+            return state
     }
    }

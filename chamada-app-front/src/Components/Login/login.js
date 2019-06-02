@@ -21,10 +21,10 @@ export class Login extends React.Component {
                 <div class="pagina-com-formulario">
                     <div class="form">
                         <form class="login-form">
-                        <input type="text" placeholder="CPF"/>
-                        <input type="password" placeholder="Senha"/>
-                        <button onclick="Login()">entrar</button>
-                        <p class="message">Não está registrado? <Link to={"/"}>Cadastre-se aqui</Link></p>
+                            <input type="text" placeholder="CPF"/>
+                            <input type="password" placeholder="Senha"/>
+                            <button onclick="Login()">entrar</button>
+                            <p class="message">Não está registrado? <Link to={"/"}>Cadastre-se aqui</Link></p>
                         </form>
                     </div>
                 </div>

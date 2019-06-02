@@ -6,7 +6,7 @@ import {
 } from '../../Redux/Actions/LoginAction';
 import '../../bootstrap.css'
 import './login.css'
-import logo from './logo.svg'
+import Header from "../Commons/Header"
 
 export class Login extends React.Component {
 
@@ -14,9 +14,7 @@ export class Login extends React.Component {
        
         return(
             <div>
-                <div className="header">
-                    <img src={logo} alt="PresençaFácil" />
-                </div>
+                <Header/>
 
                 <div className="pagina-com-formulario">
                     <div className="form">

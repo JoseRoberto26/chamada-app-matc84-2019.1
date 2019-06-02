@@ -1,16 +1,14 @@
 import React from 'react'
 import {connect} from "react-redux";
-import logo from "../Login/logo.svg";
 import {Button} from "react-bootstrap";
-import "./cadastro.css"
+import "./cadastro.css";
+import Header from "../Commons/Header";
 
 export class Cadastro extends React.Component {
     render() {
         return(
             <div>
-                <div className="header">
-                    <img src={logo} alt="PresençaFácil"/>
-                </div>
+                <Header/>
 
                 <div className="pagina-com-formulario">
                     <div className="form">
@@ -20,7 +18,7 @@ export class Cadastro extends React.Component {
                             <input type="number" placeholder="CPF"/>
                             <input type="password" placeholder="Senha"/>
                             <Button>
-                                <input type="submit"></input>
+                                <input type="submit" value="CADASTRAR"/>
                             </Button>
                         </form>
                     </div>

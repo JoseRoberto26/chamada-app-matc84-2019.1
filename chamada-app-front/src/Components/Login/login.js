@@ -13,22 +13,24 @@ export class Login extends React.Component {
     render() {
        
         return(
-            <>
-                <div class="header">
+            <div>
+                <div className="header">
                     <img src={logo} alt="PresençaFácil" />
                 </div>
 
-                <div class="pagina-com-formulario">
-                    <div class="form">
-                        <form class="login-form">
+                <div className="pagina-com-formulario">
+                    <div className="form">
+                        <form className="login-form">
                             <input type="text" placeholder="CPF"/>
                             <input type="password" placeholder="Senha"/>
-                            <button onclick="Login()">entrar</button>
-                            <p class="message">Não está registrado? <Link to={"/"}>Cadastre-se aqui</Link></p>
+                            <Link to={"/disciplinas"}>
+                                <button>entrar</button>
+                            </Link>
+                            <p className="message">Não está registrado? <Link to={"/cadastro"}>Cadastre-se aqui</Link></p>
                         </form>
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
     
@@ -39,7 +41,6 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    jojo: state.login.jojo
 });
 
 export default connect(mapStateToProps,{efetuarLogin})(Login);

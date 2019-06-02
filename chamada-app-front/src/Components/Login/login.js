@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom'
 import {
     efetuarLogin
 } from '../../Redux/Actions/LoginAction';
 import '../../bootstrap.css'
 import './login.css'
 import logo from './logo.svg'
-import {Link} from 'react-router-dom'
 
 export class Login extends React.Component {
 

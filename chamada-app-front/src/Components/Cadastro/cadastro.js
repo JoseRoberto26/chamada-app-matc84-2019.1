@@ -3,8 +3,25 @@ import {connect} from "react-redux";
 import {Button} from "react-bootstrap";
 import "./cadastro.css";
 import Header from "../Commons/Header";
+import {
+    alteraFormCadastro
+} from '../../Redux/Actions/LoginAction'
 
 export class Cadastro extends React.Component {
+
+    handleChange = (event) => {
+        console.log("entrei")
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.props.alteraFormCadastro(name, value)
+    }
+
+    handleSubmit = () => {
+        console.log("handlesubmit")
+    }
+
+
     render() {
         return(
             <div>
@@ -12,13 +29,37 @@ export class Cadastro extends React.Component {
 
                 <div className="pagina-com-formulario">
                     <div className="form">
-                        <form className="login-form">
-                            <input type="text" placeholder="Nome"/>
-                            <input type="number" placeholder="Matricula"/>
-                            <input type="number" placeholder="CPF"/>
-                            <input type="password" placeholder="Senha"/>
+                        <form className="login-form" onSubmit={() => this.handleSubmit}>
+                            <input type="text"
+                                   name="nome"
+                                   value={this.props.usuarioCadastro.nome.value}
+                                   onChange={() => this.handleChange}
+                                   placeholder={"Nome"}
+                            />
+
+                            <input type="number"
+                                   name="matricula"
+                                   value={this.props.usuarioCadastro.matricula.value}
+                                   onChange={() => this.handleChange}
+                                   placeholder={"Matricula"}
+                            />
+
+                            <input type="password"
+                                   name="senha"
+                                   value={this.props.usuarioCadastro.senha.value}
+                                   onChange={() => this.handleChange}
+                                   placeholder={"Senha"}
+                            />
+
+                            <label >É Professor?</label>
+                            <input type="checkbox"
+                                   name="isProfessor"
+                                   value={this.props.usuarioCadastro.isProfessor.value}
+                                   onChange={() => this.handleChange}
+                            />
+
                             <Button>
-                                <input type="submit" value="CADASTRAR"/>
+                                <input type="submit" value="Cadastrar"/>
                             </Button>
                         </form>
                     </div>
@@ -29,6 +70,7 @@ export class Cadastro extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    usuarioCadastro: state.login.usuarioCadastro
 });
 
-export default connect(mapStateToProps,{})(Cadastro)
+export default connect(mapStateToProps,{alteraFormCadastro})(Cadastro)

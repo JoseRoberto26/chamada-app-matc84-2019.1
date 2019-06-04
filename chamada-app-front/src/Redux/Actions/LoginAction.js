@@ -1,7 +1,29 @@
+import axios from 'axios'
 
-export const efetuarLogin = () => dispatch => {
+export const efetuarLogin = (matricula, senha) => dispatch => {
+    axios({
+        method: "get",
+        url: "http://localhost:3001/login?matricula="+matricula+"senha="+senha,
+        data: JSON.stringify()
+    }).then(
+        dispatch({
+            type: 'EFETUAR_LOGIN'
+        })
+    ).catch(
+        alert("Usuário não existe!")
+    )
+
+}
+
+export const efetuarLogout = () => dispatch => {
     dispatch({
-        type: 'EFETUAR_LOGIN',
-        payload: 'ara ara ara'
+        type: 'EFETUAR_LOGOUT'
+    })
+}
+
+export const alteraFormCadastro = (name, value) => dispatch => {
+    dispatch({
+        type: 'ALTERA_FORM',
+        payload: {name: name, value: value}
     })
 }

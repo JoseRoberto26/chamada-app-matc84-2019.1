@@ -10,6 +10,11 @@ import Header from "../Commons/Header"
 
 export class Login extends React.Component {
 
+    handleSubmit = (props) => {
+        console.log(props)
+        console.log("entrei")
+    }
+
     render() {
        
         return(
@@ -18,11 +23,13 @@ export class Login extends React.Component {
 
                 <div className="pagina-com-formulario">
                     <div className="form">
-                        <form className="login-form">
-                            <input type="text" placeholder="CPF"/>
+                        <form className="login-form" onSubmit={() => this.handleSubmit()}>
+                            <input type="text" placeholder="Número de matrícula"/>
                             <input type="password" placeholder="Senha"/>
-                            <Link to={"/disciplinas"}>
-                                <button>entrar</button>
+                            <Link to={"/home"}>
+                                <button>
+                                    <input type={"submit"} value={"Entrar"}/>
+                                </button>
                             </Link>
                             <p className="message">Não está registrado? <Link to={"/cadastro"}>Cadastre-se aqui</Link></p>
                         </form>

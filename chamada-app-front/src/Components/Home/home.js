@@ -16,12 +16,16 @@ export class Home extends React.Component {
         this.props.viewModal()
     }
 
+    componentWillMount = () => {
+        this.props.getProfessores()
+    }
+
     render() {
 
         return(
 
             <>
-                {/*{this.props.logado ?*/}
+                {this.props.logado ?
                     <div>
                         <Header/>
                         <AppNavBar/>
@@ -40,14 +44,12 @@ export class Home extends React.Component {
                             </Card.Body>
                         </Card>
 
-                        <ModalCaptcha showModalCaptcha={this.props.showModalCaptcha} handleModal={this.handleModal}/>
+                        <ModalCaptcha isProfessor={this.props.professores} showModalCaptcha={this.props.showModalCaptcha} handleModal={this.handleModal}/>
 
                     </div>
-
-                     {/*:*/}
-
-                     {/*<Redirect to='/' />*/}
-                 {/*}*/}
+                    :
+                    <Redirect to='/' />
+                 }
             </>
 
         )

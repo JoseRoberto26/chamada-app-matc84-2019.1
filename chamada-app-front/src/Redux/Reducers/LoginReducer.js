@@ -1,39 +1,26 @@
 const initialState = {
     usuario: {},
-    logado: false,
-    usuarioCadastro: {
-        nome: {
-            value: ''
-        },
-        matricula: {
-            value: ''
-        },
-        senha: {
-            value: ''
-        },
-        isProfessor: {
-            value: false
-        }
-    }
+    logado: false
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'EFETUAR_LOGIN':
+        console.log(state.logado)
             return {
+                ...state,
                 usuario: action.payload,
                 logado:true
             }
         case 'EFETUAR_LOGOUT':
             return {
+                ...state,
                 usuario: {},
                 logado: false
             }
         case 'ALTERA_FORM':
-            let formAux = state.usuarioCadastro
-            formAux[action.payload.name] = action.payload.value
             return {
-                usuarioCadastro: formAux
+                ...state
             }
         default:
             return state

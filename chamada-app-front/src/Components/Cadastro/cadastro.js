@@ -1,26 +1,30 @@
 import React from 'react'
 import {connect} from "react-redux";
-import {Button} from "react-bootstrap";
+import {Link} from 'react-router-dom'
 import "./cadastro.css";
 import Header from "../Commons/Header";
 import {
     alteraFormCadastro
 } from '../../Redux/Actions/LoginAction'
+import {Formik} from 'formik'
 
 export class Cadastro extends React.Component {
 
-    handleChange = (event) => {
-        console.log("entrei")
-        const name = event.target.name;
-        const value = event.target.value;
-
-        this.props.alteraFormCadastro(name, value)
+    handleChange = (values) => {
+       console.log(values)
     }
 
-    handleSubmit = () => {
-        console.log("handlesubmit")
-    }
+    handleSubmit = (values) => {
+        var formBomb = {
+            nome: values.nome, 
+            matricula: values.matricula,
+            senha: values.senha,
+            isProfessor: values.isProfessor
+        }
 
+        // this.props.alteraFormCadastro(formBomb)
+        console.log(formBomb)
+    }
 
     render() {
         return(
@@ -28,41 +32,67 @@ export class Cadastro extends React.Component {
                 <Header/>
 
                 <div className="pagina-com-formulario">
-                    <div className="form">
-                        <form className="login-form" onSubmit={() => this.handleSubmit}>
-                            <input type="text"
-                                   name="nome"
-                                   value={this.props.usuarioCadastro.nome.value}
-                                   onChange={() => this.handleChange}
-                                   placeholder={"Nome"}
-                            />
+                    <Formik
+                        initialValues={{
+                             nome: '', 
+                             matricula: '',
+                             senha: '',
+                             isProfessor: false
+                            }}
+                        onSubmit={this.handleSubmit}
+                        >
+                        {({
+                            values,
+                            handleChange,
+                            handleBlur,
+                            handleSubmit,
+                            isSubmitting,
+                        }) => (
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    type="text"
+                                    name="nome"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.nome}
+                                    placeholder={"Nome"}
+                                />
 
-                            <input type="number"
-                                   name="matricula"
-                                   value={this.props.usuarioCadastro.matricula.value}
-                                   onChange={() => this.handleChange}
-                                   placeholder={"Matricula"}
-                            />
+                                <input
+                                    type="number"
+                                    name="matricula"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.matricula}
+                                    placeholder={"Matrícula"}
+                                />
 
-                            <input type="password"
-                                   name="senha"
-                                   value={this.props.usuarioCadastro.senha.value}
-                                   onChange={() => this.handleChange}
-                                   placeholder={"Senha"}
-                            />
+                                <input
+                                    type="password"
+                                    name="senha"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.senha}
+                                    placeholder={"Senha"}
+                                />
 
-                            <label >É Professor?</label>
-                            <input type="checkbox"
-                                   name="isProfessor"
-                                   value={this.props.usuarioCadastro.isProfessor.value}
-                                   onChange={() => this.handleChange}
-                            />
+                                <label >É Professor?</label>
+                                <input 
+                                    type="checkbox"
+                                    name="isProfessor"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.isProfessor}
+                                />
 
-                            <Button>
-                                <input type="submit" value="Cadastrar"/>
-                            </Button>
-                        </form>
-                    </div>
+                                <button type="submit" disabled={isSubmitting}>
+                                    Cadastrar
+                                </button>
+
+                                <p className={"message"}><Link to={"/"}>Voltar</Link></p>
+                            </form>
+                        )}
+                    </Formik>
                 </div>
             </div>
         )
@@ -70,7 +100,6 @@ export class Cadastro extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    usuarioCadastro: state.login.usuarioCadastro
 });
 
 export default connect(mapStateToProps,{alteraFormCadastro})(Cadastro)

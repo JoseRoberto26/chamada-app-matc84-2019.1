@@ -1,12 +1,12 @@
 const initialState = {
     usuario: {},
-    logado: false
+    logado: false,
+    cadastrouSucesso: false
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'EFETUAR_LOGIN':
-        console.log(state.logado)
             return {
                 ...state,
                 usuario: action.payload,
@@ -20,7 +20,8 @@ export default (state = initialState, action) => {
             }
         case 'ALTERA_FORM':
             return {
-                ...state
+                ...state,
+                cadastrouSucesso: true
             }
         default:
             return state

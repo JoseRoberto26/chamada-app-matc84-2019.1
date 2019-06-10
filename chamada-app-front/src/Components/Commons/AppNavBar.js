@@ -10,13 +10,10 @@ export class AppNavBar extends React.Component {
     render() {
         return(
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand href={"/home"}>PresençaFácil</Navbar.Brand>
+                <Navbar.Brand>PresençaFácil</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav id="nav1">
-                        <Nav.Link href={"/home"}>Home</Nav.Link>
-                    </Nav>
-                    <Nav id="nav2">
                         <Nav.Link href={"/"} onClick={() => this.props.efetuarLogout()}>Sair</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

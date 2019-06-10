@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import {Redirect} from 'react-router'
 import {
-    efetuarLogin
+    getUsuario
 } from '../../Redux/Actions/LoginAction';
 import '../../bootstrap.css'
 import './login.css'
@@ -13,8 +13,7 @@ import {Formik} from 'formik'
 export class Login extends React.Component {
 
     handleSubmit = (values) => {
-        console.log(values)
-        this.props.efetuarLogin(values.matricula, values.senha)
+        this.props.getUsuario()
     }
 
     render() {
@@ -87,4 +86,4 @@ const mapStateToProps = state => ({
     logado: state.login.logado
 });
 
-export default connect(mapStateToProps,{efetuarLogin})(Login);
+export default connect(mapStateToProps,{getUsuario})(Login);

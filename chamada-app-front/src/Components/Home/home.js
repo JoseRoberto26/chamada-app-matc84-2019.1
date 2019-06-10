@@ -28,7 +28,7 @@ export class Home extends React.Component {
 
             <>
                 {this.props.logado ?
-                    this.props.usuario.isProfessor ? 
+                    !this.props.usuario.isAluno ? 
                         <div>
                             <Header/>
                             <AppNavBar/>

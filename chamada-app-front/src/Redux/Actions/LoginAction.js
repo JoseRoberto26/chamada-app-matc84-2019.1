@@ -1,31 +1,21 @@
 import axios from 'axios'
 
-// export const efetuarLogin = (matricula, senha) => dispatch => {
-//     // axios({
-//     //     method: "get",
-//     //     url: "http://localhost:3001/login?matricula="+matricula+"senha="+senha,
-//     //     data: JSON.stringify()
-//     // }).then(
-//         dispatch({
-//             type: 'EFETUAR_LOGIN'
-//         })
-//     // ).catch(
-//     //     alert("Usuário não existe!")
-//     // )
+const backUrl = "http://localhost:3001/api"
 
-// }
-
-export const getUsuario = () => dispatch => {
+export const efetuarLogin = (matricula, senha) => dispatch => {
     axios({
-        method: "get",
-        url: "https://api.myjson.com/bins/19hl0p"       // Não é professor: https://api.myjson.com/bins/7z9wp
-                                                        // É professor:     https://api.myjson.com/bins/19hl0p
-    })
-    .then( result => {
+        method: "GET",
+        url: `${backUrl}/usuario/login?matricula=${matricula}&senha=${senha}`,
+        headers: {
+            'content-type': 'application/json'
+        }
+    }).then( result => {
         dispatch({
-            type: "EFETUAR_LOGIN", // GET_USUARIO
+            type: 'EFETUAR_LOGIN',
             payload: result.data
         })
+    }, error => {
+        alert("Usuário não existe!")
     })
 }
 
@@ -36,8 +26,20 @@ export const efetuarLogout = () => dispatch => {
 }
 
 export const alteraFormCadastro = (formObject) => dispatch => {
-    dispatch({
-        type: 'ALTERA_FORM',
-        payload: {formObject}
+    return axios({
+        method: "POST",
+        url: `${backUrl}/usuario/cadastrar`,
+        headers: {
+            "content-type": "application/json",
+            "content-version": "1"
+        },
+        data: JSON.stringify(formObject)
+    }).then(response => {
+        dispatch({
+            type: 'ALTERA_FORM',
+            payload: response
+        })
+    }, error => {
+        alert("Usuário já existe!")
     })
 }

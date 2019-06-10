@@ -14,13 +14,12 @@ export class Cadastro extends React.Component {
     handleSubmit = (values) => {
         var formBomb = {
             nome: values.nome, 
-            matricula: values.matricula,
+            matricula: values.matricula.toString(),
             senha: values.senha,
-            isProfessor: values.isProfessor
+            isAluno: values.isAluno.toString()
         }
 
         this.props.alteraFormCadastro(formBomb)
-        console.log("Valores cadastrados: "+ JSON.stringify(formBomb))
     }
 
     render() {
@@ -37,7 +36,7 @@ export class Cadastro extends React.Component {
                                 nome: '', 
                                 matricula: '',
                                 senha: '',
-                                isProfessor: false
+                                isAluno: true
                                 }}
                             onSubmit={this.handleSubmit}
                             >
@@ -76,14 +75,14 @@ export class Cadastro extends React.Component {
                                         placeholder={"Senha"}
                                     />
 
-                                    <label >É Professor?</label>
+                                    {/* <label >É Aluno?</label>
                                     <input 
                                         type="checkbox"
-                                        name="isProfessor"
+                                        name="isAluno"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        value={values.isProfessor}
-                                    />
+                                        value={values.isAluno}
+                                    /> */}
 
                                     <button type="submit" disabled={isSubmitting}>
                                         Cadastrar

@@ -8,6 +8,7 @@ import {
     alterarPresenca,
     createChamada,
     encerraChamada,
+    obterChamadas,
     viewModal,
     viewPresencaModal
 } from "../../Redux/Actions/HomeAction"
@@ -20,13 +21,18 @@ export class Home extends React.Component {
         this.props.viewModal()
     }
 
+    componentWillMount = () => {
+        this.props.obterChamadas()
+    }
+
     render() {
 // console.log("Usuario: "+ JSON.stringify(this.props.usuario) )
 // console.log("Chamada Ativa: "+JSON.stringify(this.props.chamadaAtiva))
 // console.log("Alunos: "+JSON.stringify(this.props.alunos))
         return(
-
             <>
+{console.log(this.props.chamadaAtiva)}
+
                 {this.props.logado ?
                     !this.props.usuario.isAluno ? 
                         <div>
@@ -38,7 +44,7 @@ export class Home extends React.Component {
                                 <Card.Body>
                                     <Card.Title>Laboratório de Programação Web</Card.Title>
                                     <Card.Text>
-                                        {this.props.chamadaAtiva === null ? "" : this.props.chamadaAtiva.data}
+                                        {this.props.chamadaAtiva === null ? "" : `Chamada ativa: ${this.props.chamadaAtiva.createdAt}`}
                                     </Card.Text>
                                     {this.props.chamadaAtiva === null ? 
                                         <></>
@@ -47,22 +53,19 @@ export class Home extends React.Component {
                                             Captcha gerado: {this.props.chamadaAtiva.captcha}
                                         </Card.Text>
                                     }
-                                    <Card.Text>
-                                        Horário: 20:20-22:10
-                                    </Card.Text>
                                     {this.props.chamadaAtiva === null ? 
                                         <Button variant="primary" onClick={this.handleModal}>Chamada</Button>
                                     :
                                     <>
                                         <Button variant="primary" onClick={() => this.props.viewPresencaModal()}>Lista de Presença</Button>
-                                        <Button variant="danger" style={{marginLeft:"15px"}} onClick={() => this.props.encerraChamada()}>Encerrar Chamada</Button>
+                                        <Button variant="danger" style={{marginLeft:"15px"}} onClick={() => this.props.encerraChamada(this.props.chamadaAtiva._id)}>Encerrar Chamada</Button>
                                     </>
                                     }
                                     
                                 </Card.Body>
                             </Card>
 
-                            <ModalCaptcha isProfessor={this.props.professores} createChamada={this.props.createChamada} showModalCaptcha={this.props.showModalCaptcha} handleModal={this.handleModal}/>
+                            <ModalCaptcha createChamada={this.props.createChamada} showModalCaptcha={this.props.showModalCaptcha} handleModal={this.handleModal}/>
                             <ModalPresenca alunos={this.props.alunos} alterarPresenca={this.props.alterarPresenca} showModalPresenca={this.props.showModalPresenca} handleModal={() => this.props.viewPresencaModal}/>
 
                         </div>
@@ -85,10 +88,7 @@ export class Home extends React.Component {
                                     <Card.Body>
                                         <Card.Title>Laboratório de Programação Web</Card.Title>
                                         <Card.Text>
-                                            {this.props.chamadaAtiva.data}
-                                        </Card.Text>
-                                        <Card.Text>
-                                            Horário: 20:20-22:10
+                                            {this.props.chamadaAtiva.captcha}
                                         </Card.Text>
                                         {/* https://codepen.io/manishjanky/pen/eRNKLL <---------- verificar como mostrar captcha bonito */}
                                     </Card.Body>
@@ -114,4 +114,4 @@ const mapStateToProps = state => ({
     usuario: state.login.usuario
 });
 
-export default connect(mapStateToProps,{alterarPresenca, createChamada, encerraChamada, viewModal, viewPresencaModal})(Home);
+export default connect(mapStateToProps,{alterarPresenca, createChamada, encerraChamada, obterChamadas, viewModal, viewPresencaModal})(Home);

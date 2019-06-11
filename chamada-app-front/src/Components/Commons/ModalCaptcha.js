@@ -7,6 +7,7 @@ export default class ModalCaptcha extends React.Component {
         var charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
         var lengthOtp = 6;
         var captcha = [];
+        var captchaReturn = "";
 
         for (var i = 0; i < lengthOtp; i++) {
             var index = Math.floor(Math.random() * charsArray.length + 1);
@@ -15,7 +16,10 @@ export default class ModalCaptcha extends React.Component {
             else i--;
         }
 
-        return captcha
+        for (let j = 0; j < lengthOtp; j++) {
+            captchaReturn = captchaReturn.concat(captcha[j])
+        }
+        return captchaReturn
     }
 
     render() {

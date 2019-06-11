@@ -1,6 +1,5 @@
 const initialState = {
     chamadaAtiva: null,
-    chamadas: null,
     alunos: null,
     showModalCaptcha: false,
     showModalPresenca: false
@@ -13,19 +12,6 @@ export default (state = initialState, action) => {
                 ...state,
                 chamadaAtiva: action.payload,
                 showModalCaptcha: false,
-                alunos: // MOCKADO
-                [
-                    {
-                        "id": "1",
-                        "aluno": "Lucas",
-                        "presenca": false
-                    },
-                    {
-                        "id": "2",
-                        "aluno": "José",
-                        "presenca": false
-                    }
-                ]
             }
         case "END_CHAMADA" :
             return {
@@ -33,9 +19,16 @@ export default (state = initialState, action) => {
                 chamadaAtiva: null
             }
         case "GET_ALL_CHAMADAS" :
+            var chamadas = action.payload
+            console.log(chamadas)
+            let chamadaAtivaAux = null
+            var indiceChamada = chamadas.findIndex(chamada => (chamada.hasExpired === false));
+            if (chamadas[indiceChamada] !== undefined) {
+                chamadaAtivaAux = chamadas[indiceChamada]
+            }
             return {
                 ...state,
-                chamadas: action.payload
+                chamadaAtiva: chamadaAtivaAux
             }
         case "ALTERAR_PRESENCA" :
             let alunosAux = state.alunos

@@ -9,13 +9,13 @@ export const efetuarLogin = (matricula, senha) => dispatch => {
         headers: {
             'content-type': 'application/json'
         }
-    }).then( result => {
+    }).then(result => {
         dispatch({
             type: 'EFETUAR_LOGIN',
             payload: result.data
         })
     }, error => {
-        alert("Usuário não existe!")
+        alert("Usuário já existe!")
     })
 }
 

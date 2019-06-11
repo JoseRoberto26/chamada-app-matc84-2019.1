@@ -5,11 +5,11 @@ export default class ModalPresenca extends React.Component {
 
     render() {
 
-        const alunosList = this.props.alunos !== null ? this.props.alunos.map ((aluno, i) => (
+        const presencaList = this.props.presencas !== null ? this.props.presenca.map ((presenca, i) => (
             <div key={i}>
                 <div className={"aluno"+i}> 
-                    <span>{aluno.aluno}</span>
-                    <Button style={{marginLeft:"15px"}} onClick={() => this.props.alterarPresenca(aluno.id)}>Alterar Presença</Button>
+                    <span>{presenca.usuario.nome}</span>
+                    <Button style={{marginLeft:"15px"}} onClick={() => this.props.alterarPresenca(presenca._id)}>Alterar Presença</Button>
                 </div>               
             </div>
         ))
@@ -22,7 +22,7 @@ export default class ModalPresenca extends React.Component {
                     Lista de Presença
                 </Modal.Header>
                 <Modal.Body>
-                    {alunosList}
+                    {presencaList}
                 </Modal.Body>
             </Modal>
         )

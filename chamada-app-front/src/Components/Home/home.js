@@ -6,6 +6,9 @@ import {Redirect} from 'react-router'
 import { Button, Card } from "react-bootstrap";
 import {
     alterarPresenca,
+    criarPresenca,
+    obterPresencas,
+    receberPresenca,
     createChamada,
     encerraChamada,
     obterChamadas,
@@ -14,6 +17,7 @@ import {
 } from "../../Redux/Actions/HomeAction"
 import ModalCaptcha from '../Commons/ModalCaptcha'
 import ModalPresenca from '../Commons/ModalPresenca'
+import {Formik} from 'formik'
 
 export class Home extends React.Component {
 
@@ -21,18 +25,30 @@ export class Home extends React.Component {
         this.props.viewModal()
     }
 
+    handleSubmit = (values) => {
+        if(this.props.chamadaAtiva.captcha === values.captcha) {
+            this.props.criarPresenca(this.props.usuario, this.props.chamadaAtiva)
+        }
+    }
+
     componentWillMount = () => {
         this.props.obterChamadas()
+        
+    }
+
+    componentDidMount = () => {
+        
     }
 
     render() {
 // console.log("Usuario: "+ JSON.stringify(this.props.usuario) )
 // console.log("Chamada Ativa: "+JSON.stringify(this.props.chamadaAtiva))
 // console.log("Alunos: "+JSON.stringify(this.props.alunos))
+// console.log("CHAMADA: "+JSON.stringify(this.props.chamadaAtiva))
+// console.log("PRESENCA: "+JSON.stringify(this.props.presencas))
         return(
             <>
-{console.log(this.props.chamadaAtiva)}
-
+                {this.props.chamadaAtiva !== null && !this.props.chamadaRetornou ? this.props.obterPresencas(this.props.chamadaAtiva._id) : <></>}
                 {this.props.logado ?
                     !this.props.usuario.isAluno ? 
                         <div>
@@ -66,7 +82,7 @@ export class Home extends React.Component {
                             </Card>
 
                             <ModalCaptcha createChamada={this.props.createChamada} showModalCaptcha={this.props.showModalCaptcha} handleModal={this.handleModal}/>
-                            <ModalPresenca alunos={this.props.alunos} alterarPresenca={this.props.alterarPresenca} showModalPresenca={this.props.showModalPresenca} handleModal={() => this.props.viewPresencaModal}/>
+                            <ModalPresenca presencas={this.props.presencas} alterarPresenca={this.props.alterarPresenca} showModalPresenca={this.props.showModalPresenca} handleModal={() => this.props.viewPresencaModal}/>
 
                         </div>
                         :
@@ -75,7 +91,7 @@ export class Home extends React.Component {
                             <AppNavBar/>
 
                             {this.props.chamadaAtiva === null ? 
-                               <Card>
+                                <Card>
                                     <Card.Body>
                                         <Card.Text>
                                             Não há chamada ativa
@@ -83,16 +99,39 @@ export class Home extends React.Component {
                                     </Card.Body>
                                 </Card> 
                                 :
-                                <Card>
-                                    <Card.Header as="h5">MATC84</Card.Header>
-                                    <Card.Body>
-                                        <Card.Title>Laboratório de Programação Web</Card.Title>
-                                        <Card.Text>
-                                            {this.props.chamadaAtiva.captcha}
-                                        </Card.Text>
-                                        {/* https://codepen.io/manishjanky/pen/eRNKLL <---------- verificar como mostrar captcha bonito */}
-                                    </Card.Body>
-                                </Card>
+                                <div className="pagina-com-formulario">
+                                   
+                                    <Formik
+                                        initialValues={{
+                                            captcha: '',
+                                            }}
+                                        onSubmit={this.handleSubmit}
+                                        >
+                                        {({
+                                            values,
+                                            handleChange,
+                                            handleBlur,
+                                            handleSubmit,
+                                            isSubmitting,
+                                        }) => (
+                                            <form onSubmit={handleSubmit}>
+                                                <label>{this.props.chamadaAtiva.captcha}</label>
+                                                <input
+                                                    type="text"
+                                                    name="captcha"
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.captcha}
+                                                    placeholder={"Captcha"}
+                                                />
+            
+                                                <button type="submit" disabled={isSubmitting}>
+                                                    Criar presença
+                                                </button>
+                                            </form>
+                                        )}
+                                    </Formik>
+                                </div>
                             }
                         </div>
                     :
@@ -109,9 +148,11 @@ const mapStateToProps = state => ({
     showModalPresenca: state.home.showModalPresenca,
     chamadaAtiva: state.home.chamadaAtiva,
     chamadas: state.home.chamadas,
-    alunos: state.home.alunos,
+    presencas: state.home.presencas,
+    presencaRegistrada: state.home.presencaRegistrada,
+    chamadaRetornou: state.home.chamadaRetornou,
     logado: state.login.logado,
     usuario: state.login.usuario
 });
 
-export default connect(mapStateToProps,{alterarPresenca, createChamada, encerraChamada, obterChamadas, viewModal, viewPresencaModal})(Home);
+export default connect(mapStateToProps,{alterarPresenca, criarPresenca, obterPresencas, receberPresenca, createChamada, encerraChamada, obterChamadas, viewModal, viewPresencaModal})(Home);

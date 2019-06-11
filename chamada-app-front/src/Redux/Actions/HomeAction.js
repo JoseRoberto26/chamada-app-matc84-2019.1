@@ -62,9 +62,54 @@ export const obterChamadas = () => dispatch => {
     })
 }
 
-export const alterarPresenca = (id) => dispatch => {
+export const criarPresenca = (usuario, chamada) => dispatch => {
+    return axios({
+        method:"POST",
+        url: `${backUrl}/presenca/criar`,
+        headers: {
+            "content-type": "application/json",
+            "content-version": "1"
+        },
+        data: {usuario: usuario, chamada: chamada, presente: true}
+    }).then(response => {
+        dispatch({
+            type: 'CREATE_PRESENCA'
+        })
+    })
+}
+
+export const alterarPresenca = (presenca_id) => dispatch => {
+    axios({
+        method: "PUT",
+        url: `${backUrl}/presenca/alterar?presenca_id=${presenca_id}`,
+    }).then(result => {
+        dispatch({
+            type: "ALTERAR_PRESENCA",
+            payload: result.data
+        })
+    })
+}
+
+export const obterPresencas = (chamada_id) => dispatch => {
+    axios({
+        method: "GET",
+        url: `${backUrl}/presenca/lista`,
+        headers: {
+            'content-type': 'application/json'
+        },
+        data: {chamada: chamada_id}
+    }).then(result => {
+        console.log({chamada: chamada_id})
+        console.log(result.data)
+        dispatch({
+            type: 'GET_ALL_PRESENCAS',
+            payload: result.data.data
+        })
+    })
+}
+
+export const receberPresenca = () => dispatch => {
     dispatch({
-        type: "ALTERAR_PRESENCA",
-        payload: id
+        type: "RECEBE_PRESENCA"
     })
 }

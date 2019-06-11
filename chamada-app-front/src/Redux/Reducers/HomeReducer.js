@@ -1,8 +1,10 @@
 const initialState = {
     chamadaAtiva: null,
-    alunos: null,
+    presencas: null,
     showModalCaptcha: false,
-    showModalPresenca: false
+    showModalPresenca: false,
+    presencaRegistrada: false,
+    chamadaRetornou: false
 }
 
 export default (state = initialState, action) => {
@@ -20,7 +22,6 @@ export default (state = initialState, action) => {
             }
         case "GET_ALL_CHAMADAS" :
             var chamadas = action.payload
-            console.log(chamadas)
             let chamadaAtivaAux = null
             var indiceChamada = chamadas.findIndex(chamada => (chamada.hasExpired === false));
             if (chamadas[indiceChamada] !== undefined) {
@@ -29,6 +30,26 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 chamadaAtiva: chamadaAtivaAux
+            }
+        case "CREATE_PRESENCA" :
+            return {
+                ...state,
+                presencaRegistrada: true
+            }
+        case "RECEBE_PRESENCA" :
+            return {
+                ...state,
+                presencaRegistrada: true
+            }
+        case "GET_ALL_PRESENCAS" :
+            let presencaAux = action.payload
+            if(presencaAux.length === 0){
+                presencaAux = null
+            }
+            return {
+                ...state,
+                presencas: presencaAux,
+                chamadaRetornou: true
             }
         case "ALTERAR_PRESENCA" :
             let alunosAux = state.alunos

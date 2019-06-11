@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
             }
         case "RECEBE_PRESENCA" :
             let recebePresencaAux = false
-            if(state.chamadaRetornou && !recebePresencaAux) {
+            if(state.chamadaRetornou && !recebePresencaAux && state.presencas !== null) {
                 const indice = state.presencas.findIndex(aluno => (aluno.usuario === action.payload))
                 if(indice !== -1) {
                     recebePresencaAux = true

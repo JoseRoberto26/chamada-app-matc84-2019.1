@@ -49,6 +49,7 @@ export class Home extends React.Component {
         return(
             <>
                 {this.props.chamadaAtiva !== null && !this.props.chamadaRetornou ? this.props.obterPresencas(this.props.chamadaAtiva._id) : <></>}
+                {this.props.chamadaRetornou && !this.props.presencaRetornou ? this.props.receberPresenca(this.props.usuario._id) : <></>}                
                 {this.props.logado ?
                     !this.props.usuario.isAluno ? 
                         <div>
@@ -99,39 +100,48 @@ export class Home extends React.Component {
                                     </Card.Body>
                                 </Card> 
                                 :
-                                <div className="pagina-com-formulario">
-                                   
-                                    <Formik
-                                        initialValues={{
-                                            captcha: '',
-                                            }}
-                                        onSubmit={this.handleSubmit}
-                                        >
-                                        {({
-                                            values,
-                                            handleChange,
-                                            handleBlur,
-                                            handleSubmit,
-                                            isSubmitting,
-                                        }) => (
-                                            <form onSubmit={handleSubmit}>
-                                                <label>{this.props.chamadaAtiva.captcha}</label>
-                                                <input
-                                                    type="text"
-                                                    name="captcha"
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.captcha}
-                                                    placeholder={"Captcha"}
-                                                />
-            
-                                                <button type="submit" disabled={isSubmitting}>
-                                                    Criar presença
-                                                </button>
-                                            </form>
-                                        )}
-                                    </Formik>
-                                </div>
+                                this.props.presencaRegistrada ?
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Text>
+                                                Você já registrou presença nesta chamada
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card> 
+                                    :
+                                    <div className="pagina-com-formulario">
+                                    
+                                        <Formik
+                                            initialValues={{
+                                                captcha: '',
+                                                }}
+                                            onSubmit={this.handleSubmit}
+                                            >
+                                            {({
+                                                values,
+                                                handleChange,
+                                                handleBlur,
+                                                handleSubmit,
+                                                isSubmitting,
+                                            }) => (
+                                                <form onSubmit={handleSubmit}>
+                                                    <label>{this.props.chamadaAtiva.captcha}</label>
+                                                    <input
+                                                        type="text"
+                                                        name="captcha"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        value={values.captcha}
+                                                        placeholder={"Captcha"}
+                                                    />
+                
+                                                    <button type="submit" disabled={isSubmitting}>
+                                                        Criar presença
+                                                    </button>
+                                                </form>
+                                            )}
+                                        </Formik>
+                                    </div>
                             }
                         </div>
                     :
@@ -151,6 +161,7 @@ const mapStateToProps = state => ({
     presencas: state.home.presencas,
     presencaRegistrada: state.home.presencaRegistrada,
     chamadaRetornou: state.home.chamadaRetornou,
+    presencaRetornou: state.home.presencaRetornou,
     logado: state.login.logado,
     usuario: state.login.usuario
 });

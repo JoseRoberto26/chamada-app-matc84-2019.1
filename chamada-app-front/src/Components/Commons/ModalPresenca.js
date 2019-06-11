@@ -5,10 +5,10 @@ export default class ModalPresenca extends React.Component {
 
     render() {
 
-        const presencaList = this.props.presencas !== null ? this.props.presenca.map ((presenca, i) => (
+        const presencaList = this.props.presencas !== null ? this.props.presencas.map ((presenca, i) => (
             <div key={i}>
                 <div className={"aluno"+i}> 
-                    <span>{presenca.usuario.nome}</span>
+                    <span>{presenca.usuario}</span>
                     <Button style={{marginLeft:"15px"}} onClick={() => this.props.alterarPresenca(presenca._id)}>Alterar Presença</Button>
                 </div>               
             </div>

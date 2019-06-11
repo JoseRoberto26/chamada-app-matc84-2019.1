@@ -4,7 +4,8 @@ const initialState = {
     showModalCaptcha: false,
     showModalPresenca: false,
     presencaRegistrada: false,
-    chamadaRetornou: false
+    chamadaRetornou: false,
+    presencaRetornou: false
 }
 
 export default (state = initialState, action) => {
@@ -37,9 +38,17 @@ export default (state = initialState, action) => {
                 presencaRegistrada: true
             }
         case "RECEBE_PRESENCA" :
+            let recebePresencaAux = false
+            if(state.chamadaRetornou && !recebePresencaAux) {
+                const indice = state.presencas.findIndex(aluno => (aluno.usuario === action.payload))
+                if(indice !== -1) {
+                    recebePresencaAux = true
+                }
+            }
             return {
                 ...state,
-                presencaRegistrada: true
+                presencaRegistrada: recebePresencaAux,
+                presencaRetornou: true
             }
         case "GET_ALL_PRESENCAS" :
             let presencaAux = action.payload
@@ -52,10 +61,9 @@ export default (state = initialState, action) => {
                 chamadaRetornou: true
             }
         case "ALTERAR_PRESENCA" :
-            let alunosAux = state.alunos
-            const indice = alunosAux.findIndex(aluno => (aluno.id === action.payload))    // pega pelo id do aluno
-            alunosAux[indice].presenca = !state.alunos.presenca
-            console.log(alunosAux)
+            let alunosAux = state.presencas
+            const indice = alunosAux.findIndex(aluno => (aluno._id === action.payload._id))    // pega pelo id do aluno
+            alunosAux[indice].presente = !state.presencas[indice].presente
             return {
                 ...state,
                 alunos: alunosAux

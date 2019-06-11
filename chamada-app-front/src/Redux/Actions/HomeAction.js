@@ -85,7 +85,7 @@ export const alterarPresenca = (presenca_id) => dispatch => {
     }).then(result => {
         dispatch({
             type: "ALTERAR_PRESENCA",
-            payload: result.data
+            payload: result.data.data
         })
     })
 }
@@ -93,14 +93,11 @@ export const alterarPresenca = (presenca_id) => dispatch => {
 export const obterPresencas = (chamada_id) => dispatch => {
     axios({
         method: "GET",
-        url: `${backUrl}/presenca/lista`,
+        url: `${backUrl}/presenca/lista?chamada=${chamada_id}`,
         headers: {
             'content-type': 'application/json'
-        },
-        data: {chamada: chamada_id}
+        }
     }).then(result => {
-        console.log({chamada: chamada_id})
-        console.log(result.data)
         dispatch({
             type: 'GET_ALL_PRESENCAS',
             payload: result.data.data
@@ -108,8 +105,9 @@ export const obterPresencas = (chamada_id) => dispatch => {
     })
 }
 
-export const receberPresenca = () => dispatch => {
+export const receberPresenca = (usuario_id) => dispatch => {
     dispatch({
-        type: "RECEBE_PRESENCA"
+        type: "RECEBE_PRESENCA",
+        payload: usuario_id
     })
 }
